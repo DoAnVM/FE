@@ -144,7 +144,7 @@ import { ref, nextTick } from 'vue'
 
 // ── Configuration ──────────────────────────────────────────────────
 // Strip any old /api/v1/chat suffix from env var and always use streaming endpoint
-const _rawBase = import.meta.env.VITE_AI_CHAT_URL || 'http://localhost:8000'
+const _rawBase = import.meta.env.VITE_AI_CHAT_URL || 'http://localhost:8080'
 const AI_STREAM_URL = _rawBase.replace(/\/api\/v1\/chat(\/stream)?$/, '') + '/api/v1/chat/stream'
 
 // Generate a unique session ID per browser tab (persisted in sessionStorage)

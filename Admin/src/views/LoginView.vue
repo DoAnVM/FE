@@ -113,14 +113,9 @@ const togglePassword = () => {
 
         <button type="submit" class="login-btn" :disabled="authStore.loading">
           <span v-if="authStore.loading" class="spinner"></span>
-          <span v-else>Đăng nhập hệ thống</span>
+          <span v-else>Đăng nhập</span>
         </button>
       </form>
-
-      <div class="login-footer">
-        <span>Quên mật khẩu?</span>
-        <a href="#" class="support-link">Liên hệ hỗ trợ</a>
-      </div>
     </div>
   </div>
 </template>
