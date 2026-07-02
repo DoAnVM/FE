@@ -39,7 +39,7 @@
         <!-- Messages Area -->
         <div v-if="messages.length === 0" class="ai-welcome">
           <h4>Xin chào! Mình là Sandy ✨ — trợ lý du lịch của Travelstay</h4>
-          <p>Mình có thể giúp bạn tìm khách sạn, kiếm tra ưu đãi hay giải đáp về đặt phòng. Bạn cần gì hôm nay?</p>
+          <p>Mình có thể giúp bạn tìm khách sạn, các loại phòng. Bạn cần gì hôm nay?</p>
           <div class="quick-suggestions">
             <button
               v-for="s in suggestions"
@@ -144,7 +144,7 @@ import { ref, nextTick } from 'vue'
 
 // ── Configuration ──────────────────────────────────────────────────
 // Strip any old /api/v1/chat suffix from env var and always use streaming endpoint
-const _rawBase = import.meta.env.VITE_AI_CHAT_URL || 'http://34.142.206.62:8080'
+const _rawBase = import.meta.env.VITE_AI_CHAT_URL || 'http://localhost:8080'
 const AI_STREAM_URL = _rawBase.replace(/\/api\/v1\/chat(\/stream)?$/, '') + '/api/v1/chat/stream'
 
 // Generate a unique session ID per browser tab (persisted in sessionStorage)
@@ -352,7 +352,7 @@ const newLine = () => {
 /* ── Container ──────────────────────────────────────────────── */
 .ai-chat-container {
   position: fixed;
-  bottom: 80px;
+  bottom: 24px;
   right: 20px;
   z-index: 1100;
   font-family: 'Inter', sans-serif;
@@ -579,7 +579,7 @@ const newLine = () => {
 
 .ai-message {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 0.6rem;
 }
 
@@ -597,10 +597,12 @@ const newLine = () => {
   justify-content: center;
   color: #fff;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .msg-bubble {
-  max-width: 75%;
+  max-width: calc(100% - 40px);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -608,20 +610,29 @@ const newLine = () => {
 
 .ai-message.user .msg-bubble {
   align-items: flex-end;
+  max-width: 78%;
+}
+
+.ai-message.assistant .msg-bubble {
+  align-items: flex-start;
 }
 
 .msg-text {
   padding: 0.7rem 0.95rem;
   border-radius: 16px;
   font-size: 0.84rem;
-  line-height: 1.55;
+  line-height: 1.6;
   word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  display: block;
 }
 
 .ai-message.user .msg-text {
   background: #EBE0D8;
   color: #3d2817;
   border-bottom-right-radius: 4px;
+  max-width: 100%;
 }
 
 .ai-message.assistant .msg-text {
@@ -629,6 +640,8 @@ const newLine = () => {
   color: #3d2817;
   border-bottom-left-radius: 4px;
   border: 1px solid #E8DCD2;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ── Typing dots ────────────────────────────────────────────── */
