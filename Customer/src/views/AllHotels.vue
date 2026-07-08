@@ -241,25 +241,26 @@ const ratingOptions = [
   { value: '4', label: '< 4' }
 ]
 
-const amenityOptions = [
-  'Hồ bơi vô cực',
-  'Spa',
-  'Bữa sáng',
-  'WiFi',
-  'Đưa đón sân bay',
-  'Lễ tân 24/7',
-  'Phòng gia đình',
-  'Hồ bơi riêng',
-  'Xe đạp miễn phí',
-  'Bãi biển riêng',
-  'Lò sưởi',
-  'Trekking tour',
-  'Spa thảo mộc',
-  'Phòng gym',
-  'Rooftop bar',
-  'Bungalow trên biển',
-  'Lặn biển'
-]
+const amenityOptions = ref([])
+
+const fetchAmenities = async () => {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await apiFetch('/api/hotel-service/amenities', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json()
+    if (response.ok && Array.isArray(data.amenities)) {
+      amenityOptions.value = data.amenities
+    }
+  } catch (error) {
+    console.error('Error fetching amenities:', error)
+  }
+}
 
 const normalizeAmenities = (amenities) => {
   if (Array.isArray(amenities)) {
@@ -422,6 +423,7 @@ const goToHotelDetail = (hotelId) => {
 
 onMounted(() => {
   fetchAllHotels()
+  fetchAmenities()
 })
 </script>
 
